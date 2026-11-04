@@ -1,0 +1,40 @@
+name = "incr"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["Incr"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+# This project does not use Mathlib's copyright header convention.
+weak.linter.style.header = false
+# Proof sources use long lines by nature; the line-length linter only adds noise.
+linter.style.longLine = false
+# `Incr.Incr.thm_sound` repeats its parent namespace on purpose: the module mirrors
+# the Incr 1.0 protocol name. The repetition is intentional, not an accident.
+# Two linters check that pattern, and neither one applies to this tree:
+#   * mathlib's `linter.dupNamespace`, on by default, is the one that fires here;
+#   * Lean core's `linter.extra.dupNamespace`, off by default, turns on with `linter.extra`.
+weak.linter.dupNamespace = false
+linter.extra.dupNamespace = false
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.36.0-rc1"
+
+[[lean_lib]]
+name = "Incr"
+globs = ["Incr.*"]
+# This library does not use the module system yet. Mathlib does, so Lake warns on
+# every mathlib import. The mix is deliberate until the module migration happens.
+allowNonModules = true
+
+# Comparator challenge: restates the two paper soundness theorems without proofs.
+# `lake comparator` checks the statement, the axiom footprint, and kernel acceptance.
+[[lean_lib]]
+name = "Challenge"
+srcDir = "comparator"
+globs = ["Challenge"]

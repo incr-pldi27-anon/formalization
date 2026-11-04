@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Incr",
+  "theorem_names": [
+    "Incr.Incr.thm_sound",
+    "Incr.IncrPP.thm_sound"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ]
+}
